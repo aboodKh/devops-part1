@@ -20,13 +20,11 @@ def add(student=None):
         return 'already exists', 409
 
     doc_id = student_db.insert(student.to_dict())
-    print (student_id)
     student.student_id = doc_id
     return student.student_id
 
 
 def get_by_id(student_id=None, subject=None):
-    print(student_id)
     student = student_db.get(doc_id=int(student_id))
     if not student:
         return 'not found', 404
@@ -37,7 +35,6 @@ def get_by_id(student_id=None, subject=None):
 
 def delete(student_id=None):
     student = student_db.get(doc_id=int(student_id))
-    print(student_id)
     if not student:
         return 'not found', 404
     student_db.remove(doc_ids=[int(student_id)])
