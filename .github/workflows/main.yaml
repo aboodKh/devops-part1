@@ -12,8 +12,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build docker
       run: |
-       docker build . -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} ./python-flask-server-generated/Dockerfile
+       docker build -t ${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }} ./python-flask-server-generated
     - name: run docker
+      working-directory: ./python-flask-server-generated
       run: |
         docker run -d -e 8080:8080 -host=172.17.0.2 $REPO_NAME/$IMAGE_NAME:latest && \
           docker ps && sleep 5
@@ -27,6 +28,7 @@ jobs:
         iterationCount: 3
 
     - name: Output summary to console
+      working-directory: ./python-flask-server-generated
       run: echo ${{ steps.run-newman.outputs.summary }}
 
 
